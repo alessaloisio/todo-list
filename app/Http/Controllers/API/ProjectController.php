@@ -20,14 +20,6 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = DB::table('projects')
-            ->where('user_id', $request->get('user')->id)
-            ->get();
-
-        return response()->json([
-            'status' => 200,
-            'projects' => $projects
-        ]);
 
     }
 
@@ -39,38 +31,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'     => 'required'
-        ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 400,
-                'message' => $validator->messages(),
-            ]);
-        }
-        else {
-
-            $postArray = [
-                'name' => $request->name,
-                'description' => $request->description,
-                'user_id' => $request->get('user')->id
-            ];
-
-            $project = Project::create($postArray);
-
-            if ($project) {
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Project saved'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 400,
-                    'message' => 'Saving failed, please try again.'
-                ]);
-            }
-        }
     }
 
     /**
@@ -82,15 +43,7 @@ class ProjectController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $project = DB::table('projects')
-            ->where('user_id', $request->get('user')->id)
-            ->where('id', $id)
-            ->get();
 
-        return response()->json([
-            'status' => 200,
-            'projects' => $project
-        ]);
     }
 
     /**
@@ -103,48 +56,6 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name'     => 'max:255',
-            'description' => 'max:255'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 400,
-                'message' => $validator->messages(),
-            ]);
-        }
-        else {
-
-            $postArray = [];
-
-            if(!empty($request->name)) {
-                $postArray['name'] = $request->name;
-            }
-
-            if(!empty($request->description)) {
-                $postArray['description'] = $request->description;
-            }
-
-            $project = DB::table('projects')
-                ->where('user_id', $request->get('user')->id)
-                ->where('id', $id)
-                ->update($postArray);
-
-            if($project) {
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Project updated',
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 400,
-                    'message' => 'Project not updated',
-                ]);
-            }
-        }
-
-
     }
 
     /**
@@ -156,21 +67,6 @@ class ProjectController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $project = DB::table('projects')
-            ->where('user_id', $request->get('user')->id)
-            ->where('id', $id)
-            ->delete();
 
-        if($project) {
-            return response()->json([
-                'status' => 200,
-                'message' => 'Project deleted',
-            ]);
-        } else {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Project not deleted',
-            ]);
-        }
     }
 }

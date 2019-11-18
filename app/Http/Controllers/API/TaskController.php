@@ -20,38 +20,7 @@ class TaskController extends Controller
      */
     public function index(Request $request, $project_id, $list_id)
     {
-        $project = DB::table('projects')
-            ->where('user_id', $request->get('user')->id)
-            ->where('id', $project_id)
-            ->get()->first();
 
-        if($project) {
-
-            $lists = DB::table('lists')
-                ->where('project_id', $project_id)
-                ->where('id', $list_id)
-                ->get()->first();
-
-            if ($lists) {
-                $tasks = DB::table('tasks')
-                    ->where('list_id', $list_id)
-                    ->get()->all();
-                return response()->json([
-                    'status' => 200,
-                    'list' => $lists
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 400,
-                    'message' => 'List not found.'
-                ]);
-            }
-        } else {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Project not found'
-            ]);
-        }
     }
 
     /**
@@ -65,67 +34,6 @@ class TaskController extends Controller
     public function store(Request $request, $project_id, $list_id)
     {
 
-        $validator = Validator::make($request->all(), [
-            'content_task'     => 'required|max:255'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 400,
-                'message' => $validator->messages(),
-            ]);
-        }
-        else {
-
-            $project = DB::table('projects')
-                ->where('user_id', $request->get('user')->id)
-                ->where('id', $project_id)
-                ->get()->first();
-
-            if ($project) {
-
-                $lists = DB::table('lists')
-                    ->where('project_id', $project_id)
-                    ->where('id', $list_id)
-                    ->get()->first();
-
-                if ($lists) {
-
-                    $postArray = [];
-
-                    $postArray['list_id'] = $list_id;
-                    $postArray['created_at'] = now();
-                    if (!empty($request->content_task)) {
-                        $postArray['content'] = $request->content_task;
-                    }
-
-                    $list = DB::table('tasks')->insert($postArray);
-
-                    if ($list) {
-                        return response()->json([
-                            'status' => 200,
-                            'message' => 'Task created'
-                        ]);
-                    } else {
-                        return response()->json([
-                            'status' => 400,
-                            'message' => 'Task not created',
-                        ]);
-                    }
-
-                } else {
-                    return response()->json([
-                        'status' => 400,
-                        'message' => 'List not found'
-                    ]);
-                }
-            } else {
-                return response()->json([
-                    'status' => 400,
-                    'message' => 'Project not found'
-                ]);
-            }
-        }
     }
 
     /**
@@ -136,7 +44,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+
     }
 
     /**
@@ -148,7 +56,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+
     }
 
     /**
@@ -159,6 +67,6 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+
     }
 }

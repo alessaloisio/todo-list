@@ -103,6 +103,48 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
 
+        $validator = Validator::make($request->all(), [
+            'name'     => 'max:255',
+            'description' => 'max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' => $validator->messages(),
+            ]);
+        }
+        else {
+
+            $postArray = [];
+
+            if(!empty($request->name)) {
+                $postArray['name'] = $request->name;
+            }
+
+            if(!empty($request->description)) {
+                $postArray['description'] = $request->description;
+            }
+
+            $project = DB::table('projects')
+                ->where('user_id', $request->get('user')->id)
+                ->where('id', $id)
+                ->update($postArray);
+
+            if($project) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Project updated',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Project not updated',
+                ]);
+            }
+        }
+
+
     }
 
     /**
@@ -114,6 +156,21 @@ class ProjectController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        $project = DB::table('projects')
+            ->where('user_id', $request->get('user')->id)
+            ->where('id', $id)
+            ->delete();
 
+        if($project) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Project deleted',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Project not deleted',
+            ]);
+        }
     }
 }

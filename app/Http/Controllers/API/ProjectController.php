@@ -70,8 +70,8 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  string  $id
+     * @param ProjectPutRequest $request
+     * @param string $id
      * @return Response
      */
     public function update(ProjectPutRequest $request, $id)

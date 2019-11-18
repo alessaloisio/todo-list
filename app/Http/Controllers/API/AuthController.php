@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\User;
 
 use Illuminate\Http\Request;
@@ -22,12 +23,21 @@ class AuthController extends Controller
     /**
      * Register User
      *
-     * @param Request $request
+     * @param UserRequest $request
+     * @param User $user
      * @return Response
      */
-    public function register(Request $request)
+    public function register(UserRequest $request, User $user)
     {
 
+        $user->email = $request->input('email');
+        $user->name = $request->input('name');
+        $user->password = bcrypt($request->input('password'));
+        $user->api_token = $this->apiToken;
+
+        $user->save();
+
+        return response()->json(['message' => 'User registered']);
     }
 
     /**

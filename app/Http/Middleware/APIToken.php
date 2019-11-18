@@ -19,13 +19,17 @@ class APIToken
         if($request->header('Authorization')){
 
             $token = $request->header('Authorization');
-            $user = User::where('api_token',$token)->first();
+
+
+            $user = User::where('api_token', $token)->first();
 
             if($user) {
+
                 // Save USER info for the controller
                 // https://laracasts.com/discuss/channels/laravel/reqeuest-attributes
                 $request->attributes->add(['user' => $user]);
                 return $next($request);
+
             } else {
                 return response()->json([
                     'status' => 400,

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="becode-todolist@172.17.0.2" uuid="228b60ef-fdd9-4d71-972e-ae898bbd0cb7">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://172.17.0.2:3306/becode-todolist</jdbc-url>
+    </data-source>
+  </component>
+</project>

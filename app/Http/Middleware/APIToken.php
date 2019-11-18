@@ -32,15 +32,14 @@ class APIToken
 
             } else {
                 return response()->json([
-                    'status' => 400,
                     'message' => 'User not found'
-                ]);
+                ], 422);
             }
 
         }
 
         return response()->json([
             'message' => 'Not a valid API request.',
-        ]);
+        ], 422);
     }
 }

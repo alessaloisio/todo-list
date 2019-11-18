@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class UserRequest extends BaseFormRequest
+class UserLoginRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class UserRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users',
-            'name' => 'required|string|max:50|min:3',
+            'email' => 'required|email',
             'password' => 'required|min:8'
         ];
     }
@@ -36,8 +35,7 @@ class UserRequest extends BaseFormRequest
     public function filters()
     {
         return [
-            'email' => 'trim|lowercase',
-            'name' => 'trim|capitalize|escape'
+            'email' => 'trim|lowercase'
         ];
     }
 }

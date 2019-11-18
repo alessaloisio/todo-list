@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserLoginRequest;
 use App\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -23,11 +23,11 @@ class AuthController extends Controller
     /**
      * Register User
      *
-     * @param UserRequest $request
+     * @param UserRegisterRequest $request
      * @param User $user
      * @return Response
      */
-    public function register(UserRequest $request, User $user)
+    public function register(UserRegisterRequest $request, User $user)
     {
 
         $user->email = $request->input('email');
@@ -43,23 +43,55 @@ class AuthController extends Controller
     /**
      * Login User
      *
-     * @param Request $request
+     * @param UserLoginRequest $request
      * @return Response
      */
-    public function login(Request $request)
+    public function login(UserLoginRequest $request)
     {
 
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            if (password_verify($request->password, $user->password)) {
+
+                // Update Token
+                $login = User::where('email', $request->email)
+                    ->update(['api_token' => $this->apiToken]);
+
+                if($login) {
+                    return response()->json([
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'access_token' => $this->apiToken,
+                    ]);
+                }
+
+            } else {
+                return response()->json(['message' => 'Invalid Password'], 422);
+            }
+        } else {
+            return response()->json(['message' => 'User not found'], 422);
+        }
     }
 
     /**
      * Logout User
      *
-     * @param Request $request
+     * @param Request $request * @return void
      * @return Response
      */
     public function logout(Request $request)
     {
 
+        $user = $request->get('user');
+
+        $logout = User::where('id',$user->id)->update(['api_token' => null]);
+
+        if($logout) {
+            return response()->json([
+                'message' => 'User Logged Out'
+            ]);
+        }
     }
 
 }

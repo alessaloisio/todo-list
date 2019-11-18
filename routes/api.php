@@ -29,7 +29,9 @@ Route::middleware('APIToken')->group(function () {
     // Logout
     Route::get('/auth/logout', 'API\AuthController@logout');
 
-    // PROJECTS
+    /*
+     * PROJECTS
+     */
     Route::get('/projects', 'API\ProjectController@index');
 
     Route::post('/project', 'API\ProjectController@store');
@@ -57,11 +59,28 @@ Route::middleware('APIToken')->group(function () {
         ->where('list_id', '[0-9]+');
 
     // TASKS
-    Route::post('/project/{project_id}/list/{list_id}/tasks/', 'API\TaskController@store')
+    Route::get('/project/{project_id}/list/{list_id}/tasks/', 'API\TaskController@index')
         ->where('project_id', '[0-9]+')
         ->where('list_id', '[0-9]+');
 
-    Route::get('/project/{project_id}/list/{list_id}/tasks/', 'API\TaskController@store')
+    Route::post('/project/{project_id}/list/{list_id}/task/', 'API\TaskController@store')
         ->where('project_id', '[0-9]+')
         ->where('list_id', '[0-9]+');
+
+    Route::get('/project/{project_id}/list/{list_id}/task/{task_id}', 'API\TaskController@show')
+        ->where('project_id', '[0-9]+')
+        ->where('list_id', '[0-9]+')
+        ->where('task_id', '[0-9]+');
+
+    Route::post('/project/{project_id}/list/{list_id}/task/{task_id}', 'API\TaskController@update')
+        ->where('project_id', '[0-9]+')
+        ->where('list_id', '[0-9]+')
+        ->where('task_id', '[0-9]+');
+
+    Route::delete('/project/{project_id}/list/{list_id}/task/{task_id}', 'API\TaskController@destroy')
+        ->where('project_id', '[0-9]+')
+        ->where('list_id', '[0-9]+')
+        ->where('task_id', '[0-9]+');
+
+
 });

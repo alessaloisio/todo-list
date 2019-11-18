@@ -90,15 +90,23 @@ class ListTaskController extends Controller
      */
     public function update(ListTaskPutRequest $request, $project_id, $list_id)
     {
-        $listTask = ListTask::where('project_id', $project_id)->where('id', $list_id)->get()->first();
 
-        if($listTask) {
-            if(!empty($request->name)) $listTask->name = $request->name;
+        $projects = Project::where('user_id', $request->get('user')->id)
+            ->where('id', $project_id)->get()->first();
 
-            $result = $listTask->save();
+        if($projects) {
 
-            if($result)
-                return response()->json(['message' => 'List updated']);
+            $listTask = ListTask::where('project_id', $project_id)->where('id', $list_id)->get()->first();
+
+            if ($listTask) {
+                if (!empty($request->name)) $listTask->name = $request->name;
+
+                $result = $listTask->save();
+
+                if ($result)
+                    return response()->json(['message' => 'List updated']);
+            }
+
         }
 
         return response()->json(['message' => 'List not updated'], 422);

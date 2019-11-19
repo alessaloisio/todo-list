@@ -26,6 +26,10 @@ Route::post('/auth/register', 'API\AuthController@register');
 
 // Protected with APIToken Middleware
 Route::middleware('APIToken')->group(function () {
+    // Users
+    Route::get('/user', 'API\UserController@show');
+    Route::post('/user', 'API\UserController@update');
+
     // Logout
     Route::get('/auth/logout', 'API\AuthController@logout');
 

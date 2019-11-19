@@ -60,7 +60,7 @@ class ProjectController extends Controller
     {
         $project = Project::where('user_id', $request->get('user')->id)
             ->where('id', $id)
-            ->get();
+            ->get()->first();
 
         if($project) return response()->json($project);
 

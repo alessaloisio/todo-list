@@ -24,7 +24,7 @@ class TaskController extends Controller
     public function index(Request $request, $project_id, $list_id)
     {
         $project = Project::where('user_id', $request->get('user')->id)
-            ->where('id', $project_id)->get()->first();
+            ->where('projects.id', $project_id)->get()->first();
 
         if($project) {
             $list = ListTask::where('project_id', $project_id)->where('id', $list_id)->get()->first();

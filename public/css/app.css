@@ -19741,6 +19741,10 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   font-size: 1.5em;
 }
 
+.mobile-navbar .brand-logo {
+  color: #5e72e4;
+}
+
 .section-full-height {
   min-height: calc(100vh - 56px - 125px);
 }

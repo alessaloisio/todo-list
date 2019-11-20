@@ -3713,6 +3713,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_BaseNav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/BaseNav */ "./resources/js/components/BaseNav.vue");
 /* harmony import */ var _components_CloseButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/CloseButton */ "./resources/js/components/CloseButton.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -3759,12 +3761,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BaseNav: _components_BaseNav__WEBPACK_IMPORTED_MODULE_0__["default"],
     CloseButton: _components_CloseButton__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  methods: {
+    logout: function logout(event) {
+      var self = this;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(window.endpoint + "auth/logout", {
+        params: {},
+        headers: {
+          'Authorization': localStorage.getItem('auth_token')
+        }
+      }).then(function (response) {
+        localStorage.removeItem('auth_token');
+        self.$store.commit("authenticate");
+        self.$router.push({
+          name: "Login"
+        });
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+    }
   }
 });
 
@@ -3858,25 +3898,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4456,10 +4477,11 @@ __webpack_require__.r(__webpack_exports__);
         email: self.form.email,
         password: self.form.password
       }).then(function (response) {
-        console.log(self); // localStorage.setItem('auth_token', response.data['access_token']);
-        // self.$router.push({
-        //     name: "Dashboard"
-        // });
+        localStorage.setItem('auth_token', response.data['access_token']);
+        self.$store.commit("authenticate");
+        self.$router.push({
+          name: "Dashboard"
+        });
       })["catch"](function (error) {
         if (error.response) {
           console.log(error.response);
@@ -4573,6 +4595,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4630,7 +4654,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      form: {
+        name: '',
+        email: '',
+        password: ''
+      },
+      errors: {}
+    };
+  },
+  methods: {
+    register: function register() {
+      var self = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(window.endpoint + "auth/register", {
+        name: self.form.name,
+        email: self.form.email,
+        password: self.form.password
+      }).then(function (response) {
+        self.$router.push({
+          name: "Login"
+        });
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response);
+          var data = error.response.data;
+          var result = {};
+
+          for (var key in data) {
+            if (!data.hasOwnProperty(key)) continue;
+            var obj = data[key];
+            result[key] = obj.toString();
+          }
+
+          self.errors = result;
+        }
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -16201,12 +16273,27 @@ var render = function() {
               key: "content-header",
               fn: function(ref) {
                 var closeMenu = ref.closeMenu
-                return _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-6 collapse-brand" }, [
-                    _c("a", { attrs: { href: "../index.html" } }, [
-                      _c("img", { attrs: { src: "img/brand/blue.png" } })
-                    ])
-                  ]),
+                return _c("div", { staticClass: "row mobile-navbar" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-6 collapse-brand" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "brand-logo navbar-brand mr-lg-5",
+                          attrs: { slot: "brand", to: "/" },
+                          slot: "brand"
+                        },
+                        [
+                          _vm._v(
+                            "\n                    ToutDouxLiss't\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -16237,6 +16324,24 @@ var render = function() {
               staticClass: "navbar-nav navbar-nav-hover align-items-lg-center"
             },
             [
+              _vm.$store.state.authenticate
+                ? _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: "/dashboard" }
+                        },
+                        [_vm._v("Dashboard")]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c("li", { staticClass: "nav-item dropdown" }, [
                 _c(
                   "a",
@@ -16249,8 +16354,6 @@ var render = function() {
                     }
                   },
                   [
-                    _c("i", { staticClass: "ni ni-collection d-lg-none" }),
-                    _vm._v(" "),
                     _c("span", { staticClass: "nav-link-inner--text" }, [
                       _vm._v("Pages")
                     ])
@@ -16261,15 +16364,6 @@ var render = function() {
                   "div",
                   { staticClass: "dropdown-menu" },
                   [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { to: "/landing" }
-                      },
-                      [_vm._v("Landing")]
-                    ),
-                    _vm._v(" "),
                     _c(
                       "router-link",
                       {
@@ -16294,35 +16388,64 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "navbar-nav align-items-lg-center ml-lg-auto" },
-            [
-              _c(
-                "li",
-                { staticClass: "nav-item d-none d-lg-block ml-lg-4" },
+          !_vm.$store.state.authenticate
+            ? _c(
+                "ul",
+                { staticClass: "navbar-nav align-items-lg-center ml-lg-auto" },
                 [
                   _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-neutral btn-icon",
-                      attrs: { to: "/login" }
-                    },
+                    "li",
+                    { staticClass: "nav-item d-none d-lg-block ml-lg-4" },
                     [
-                      _c("span", { staticClass: "btn-inner--icon" }, [
-                        _c("i", { staticClass: "ni ni-circle-08 mr-2" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "nav-link-inner--text" }, [
-                        _vm._v("Login")
-                      ])
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-neutral btn-icon",
+                          attrs: { to: "/login" }
+                        },
+                        [
+                          _c("span", { staticClass: "btn-inner--icon" }, [
+                            _c("i", { staticClass: "ni ni-circle-08 mr-2" })
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "nav-link-inner--text" }, [
+                            _vm._v("Login")
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              )
+            : _c(
+                "ul",
+                { staticClass: "navbar-nav align-items-lg-center ml-lg-auto" },
+                [
+                  _c(
+                    "li",
+                    { staticClass: "nav-item d-none d-lg-block ml-lg-4" },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-neutral btn-icon",
+                          on: { click: _vm.logout }
+                        },
+                        [
+                          _c("span", { staticClass: "btn-inner--icon" }, [
+                            _c("i", { staticClass: "ni ni-circle-08 mr-2" })
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "nav-link-inner--text" }, [
+                            _vm._v("Logout")
+                          ])
+                        ]
+                      )
                     ]
                   )
-                ],
-                1
+                ]
               )
-            ]
-          )
         ],
         1
       )
@@ -16425,72 +16548,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "position-relative" }, [
-      _c("section", { staticClass: "section-shaped my-0" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "container shape-container d-flex" }, [
-          _c("div", { staticClass: "col px-0" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-6" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("p", { staticClass: "lead  text-white" }, [
-                  _vm._v(
-                    "The design system comes with four pre-built pages to help\n                                you get started faster. You can change the text and images and you're good to\n                                go."
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-wrapper" },
-                  [
-                    _c(
-                      "base-button",
-                      {
-                        staticClass: "mb-3 mb-sm-0",
-                        attrs: {
-                          tag: "a",
-                          href:
-                            "https://demos.creative-tim.com/argon-design-system/docs/components/alerts.html",
-                          type: "info",
-                          icon: "fa fa-code"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    Components\n                                "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "base-button",
-                      {
-                        staticClass: "mb-3 mb-sm-0",
-                        attrs: {
-                          tag: "a",
-                          href:
-                            "https://www.creative-tim.com/product/argon-design-system",
-                          type: "white",
-                          icon: "ni ni-cloud-download-95"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    Download HTML\n                                "
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
-            ])
-          ])
-        ])
-      ])
-    ]),
+    _vm._m(0),
     _vm._v(" "),
     _c("section", { staticClass: "section section-lg pt-lg-0 mt--200" }, [
       _c("div", { staticClass: "container" }, [
@@ -16724,7 +16782,7 @@ var render = function() {
     _c("section", { staticClass: "section section-lg" }, [
       _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "row row-grid align-items-center" }, [
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 order-md-1" }, [
             _c(
@@ -16941,11 +16999,11 @@ var render = function() {
       "section",
       { staticClass: "section section section-shaped my-0 overflow-hidden" },
       [
-        _vm._m(3),
+        _vm._m(2),
         _vm._v(" "),
         _c("div", { staticClass: "container py-0" }, [
           _c("div", { staticClass: "row row-grid align-items-center" }, [
-            _vm._m(4),
+            _vm._m(3),
             _vm._v(" "),
             _c(
               "div",
@@ -16969,7 +17027,7 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _vm._m(4)
                 ]),
                 _vm._v(" "),
                 _c(
@@ -17071,7 +17129,7 @@ var render = function() {
     _vm._v(" "),
     _c("section", { staticClass: "section section-lg" }, [
       _c("div", { staticClass: "container" }, [
-        _vm._m(6),
+        _vm._m(5),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-6 col-lg-3 mb-5 mb-lg-0" }, [
@@ -17091,7 +17149,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "pt-4 text-center" }, [
-                _vm._m(7),
+                _vm._m(6),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -17153,7 +17211,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "pt-4 text-center" }, [
-                _vm._m(8),
+                _vm._m(7),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -17215,7 +17273,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "pt-4 text-center" }, [
-                _vm._m(9),
+                _vm._m(8),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -17277,7 +17335,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "pt-4 text-center" }, [
-                _vm._m(10),
+                _vm._m(9),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -17389,10 +17447,10 @@ var render = function() {
       "section",
       { staticClass: "section section-shaped my-0 overflow-hidden" },
       [
-        _vm._m(11),
+        _vm._m(10),
         _vm._v(" "),
         _c("div", { staticClass: "container pt-lg pb-300" }, [
-          _vm._m(12),
+          _vm._m(11),
           _vm._v(" "),
           _c("div", { staticClass: "row row-grid mt-5" }, [
             _c(
@@ -17571,7 +17629,7 @@ var render = function() {
       _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "row row-grid justify-content-center" }, [
           _c("div", { staticClass: "col-lg-8 text-center" }, [
-            _vm._m(13),
+            _vm._m(12),
             _vm._v(" "),
             _c("p", { staticClass: "lead" }, [
               _vm._v(
@@ -17579,7 +17637,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(14),
+            _vm._m(13),
             _vm._v(" "),
             _c("div", { staticClass: "text-center" }, [
               _c("h4", { staticClass: "display-4 mb-5 mt-5" }, [
@@ -17778,37 +17836,47 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "shape shape-style-1 shape-default shape-skew" },
-      [
-        _c("span"),
+    return _c("div", { staticClass: "position-relative" }, [
+      _c("section", { staticClass: "section-shaped my-0" }, [
+        _c(
+          "div",
+          { staticClass: "shape shape-style-1 shape-default shape-skew" },
+          [
+            _c("span"),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c("span")
+          ]
+        ),
         _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h1", { staticClass: "display-3  text-white" }, [
-      _vm._v("A beautiful Design System\n                                "),
-      _c("span", [_vm._v("completed with examples")])
+        _c("div", { staticClass: "container shape-container d-flex" }, [
+          _c("div", { staticClass: "col px-0" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c("h1", { staticClass: "display-3  text-white" }, [
+                  _vm._v(
+                    "A beautiful To-do List\n                                "
+                  ),
+                  _c("span", [_vm._v("completed with nice features")])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
     ])
   },
   function() {
@@ -18448,7 +18516,15 @@ var render = function() {
                           attrs: {
                             alternative: "",
                             placeholder: "Name",
+                            error: _vm.errors.name,
                             "addon-left-icon": "ni ni-hat-3"
+                          },
+                          model: {
+                            value: _vm.form.name,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "name", $$v)
+                            },
+                            expression: "form.name"
                           }
                         }),
                         _vm._v(" "),
@@ -18457,7 +18533,15 @@ var render = function() {
                           attrs: {
                             alternative: "",
                             placeholder: "Email",
+                            error: _vm.errors.email,
                             "addon-left-icon": "ni ni-email-83"
+                          },
+                          model: {
+                            value: _vm.form.email,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "email", $$v)
+                            },
+                            expression: "form.email"
                           }
                         }),
                         _vm._v(" "),
@@ -18466,7 +18550,15 @@ var render = function() {
                             alternative: "",
                             type: "password",
                             placeholder: "Password",
+                            error: _vm.errors.password,
                             "addon-left-icon": "ni ni-lock-circle-open"
+                          },
+                          model: {
+                            value: _vm.form.password,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "password", $$v)
+                            },
+                            expression: "form.password"
                           }
                         }),
                         _vm._v(" "),
@@ -18491,7 +18583,8 @@ var render = function() {
                               "base-button",
                               {
                                 staticClass: "my-4",
-                                attrs: { type: "primary" }
+                                attrs: { type: "primary" },
+                                on: { click: _vm.register }
                               },
                               [_vm._v("Create account")]
                             )
@@ -39287,6 +39380,10 @@ __webpack_require__.r(__webpack_exports__);
 window.endpoint = "http://172.17.0.2:8000/api/";
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_plugins_argon_kit__WEBPACK_IMPORTED_MODULE_1__["default"]);
+_router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {
+  if (localStorage.getItem('auth_token') && !_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.authenticate) _store__WEBPACK_IMPORTED_MODULE_3__["default"].commit('authenticate');
+  next();
+});
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
   store: _store__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -41157,7 +41254,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   },
   mutations: {
     authenticate: function authenticate(state) {
-      state.authenticate = state;
+      state.authenticate = !state.authenticate;
     }
   }
 }));

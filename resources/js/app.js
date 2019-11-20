@@ -30,8 +30,17 @@ Vue.config.productionTip = false;
 
 Vue.use(Argon);
 
+router.beforeEach((to, from, next) => {
+
+    if(localStorage.getItem('auth_token') && !store.state.authenticate)
+        store.commit('authenticate');
+
+    next();
+});
+
 new Vue({
   router,
     store,
   render: h => h(App)
 }).$mount("#app");
+

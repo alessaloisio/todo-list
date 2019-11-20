@@ -82,13 +82,11 @@
                     password: self.form.password
                 })
                     .then(function (response) {
-
-                        console.log(self);
-
-                        // localStorage.setItem('auth_token', response.data['access_token']);
-                        // self.$router.push({
-                        //     name: "Dashboard"
-                        // });
+                        localStorage.setItem('auth_token', response.data['access_token']);
+                        self.$store.commit("authenticate");
+                        self.$router.push({
+                            name: "Dashboard"
+                        });
                     })
                     .catch(function (error) {
                         if(error.response){

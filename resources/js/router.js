@@ -22,7 +22,6 @@ export default new Router({
             components: {
                 header: Header,
                 default: Home,
-                footer: Footer
             }
         },
         {

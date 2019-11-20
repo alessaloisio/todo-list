@@ -67,10 +67,10 @@ class AuthController extends Controller
                 }
 
             } else {
-                return response()->json(['message' => 'Invalid Password'], 422);
+                return response()->json(['password' => 'Invalid Password'], 422);
             }
         } else {
-            return response()->json(['message' => 'User not found'], 422);
+            return response()->json(['email' => 'User not found'], 422);
         }
     }
 

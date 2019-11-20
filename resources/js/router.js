@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 
+import Guest from "./middleware/guest";
+import Auth from "./middleware/auth";
+
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 
@@ -18,15 +21,7 @@ export default new Router({
     routes: [
         {
             path: "/",
-            name: "home",
-            components: {
-                header: Header,
-                default: Home,
-            }
-        },
-        {
-            path: "/landing",
-            name: "landing",
+            name: "Home",
             components: {
                 header: Header,
                 default: Landing,
@@ -35,7 +30,7 @@ export default new Router({
         },
         {
             path: "/components",
-            name: "components",
+            name: "Components",
             components: {
                 header: Header,
                 default: Components,
@@ -44,30 +39,42 @@ export default new Router({
         },
         {
             path: "/login",
-            name: "login",
+            name: "Login",
             components: {
                 header: Header,
                 default: Login,
                 footer: Footer
-            }
+            },
+            beforeEnter: Guest
         },
         {
             path: "/register",
-            name: "register",
+            name: "Register",
             components: {
                 header: Header,
                 default: Register,
                 footer: Footer
-            }
+            },
+            beforeEnter: Guest
         },
         {
             path: "/profile",
-            name: "profile",
+            name: "Profile",
             components: {
                 header: Header,
                 default: Profile,
                 footer: Footer
-            }
+            },
+            beforeEnter: Auth
+        },
+        {
+            path: "/dashboard",
+            name: "Dashboard",
+            components: {
+                header: Header,
+                // default: Dashboard
+            },
+            beforeEnter: Auth
         }
     ],
     scrollBehavior: to => {

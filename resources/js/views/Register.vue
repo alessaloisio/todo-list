@@ -19,24 +19,10 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Sign in with</small>
-                            </div>
-                            <div class="btn-wrapper text-center">
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/github.svg">
-                                    Github
-                                </base-button>
-
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/google.svg">
-                                    Google
-                                </base-button>
+                                <small>Register in</small>
                             </div>
                         </template>
                         <template>
-                            <div class="text-center text-muted mb-4">
-                                <small>Or sign up with credentials</small>
-                            </div>
                             <form role="form">
                                 <base-input alternative
                                             class="mb-3"
@@ -58,11 +44,6 @@
                                         <span class="text-success font-weight-700">strong</span>
                                     </small>
                                 </div>
-                                <base-checkbox>
-                                    <span>I agree with the
-                                        <a href="#">Privacy Policy</a>
-                                    </span>
-                                </base-checkbox>
                                 <div class="text-center">
                                     <base-button type="primary" class="my-4">Create account</base-button>
                                 </div>

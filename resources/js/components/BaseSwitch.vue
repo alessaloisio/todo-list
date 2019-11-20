@@ -23,8 +23,10 @@ export default {
       get() {
         return this.value;
       },
-      set(value) {
-        this.$emit("input", value);
+      set() {
+          // this.value = !this.value;
+          this.$emit("input", this.value);
+        // this.$emit("input", value);
       }
     }
   }

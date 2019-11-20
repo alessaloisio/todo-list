@@ -1270,8 +1270,9 @@ __webpack_require__.r(__webpack_exports__);
       get: function get() {
         return this.value;
       },
-      set: function set(value) {
-        this.$emit("input", value);
+      set: function set() {
+        // this.value = !this.value;
+        this.$emit("input", this.value); // this.$emit("input", value);
       }
     }
   }
@@ -2777,27 +2778,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -2894,25 +2874,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -16671,48 +16632,11 @@ var render = function() {
                 [
                   [
                     _c("div", { staticClass: "text-muted text-center mb-3" }, [
-                      _c("small", [_vm._v("Sign in with")])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "btn-wrapper text-center" },
-                      [
-                        _c("base-button", { attrs: { type: "neutral" } }, [
-                          _c("img", {
-                            attrs: {
-                              slot: "icon",
-                              src: "img/icons/common/github.svg"
-                            },
-                            slot: "icon"
-                          }),
-                          _vm._v(
-                            "\n                                Github\n                            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("base-button", { attrs: { type: "neutral" } }, [
-                          _c("img", {
-                            attrs: {
-                              slot: "icon",
-                              src: "img/icons/common/google.svg"
-                            },
-                            slot: "icon"
-                          }),
-                          _vm._v(
-                            "\n                                Google\n                            "
-                          )
-                        ])
-                      ],
-                      1
-                    )
+                      _c("small", [_vm._v("Sign in")])
+                    ])
                   ],
                   _vm._v(" "),
                   [
-                    _c("div", { staticClass: "text-center text-muted mb-4" }, [
-                      _c("small", [_vm._v("Or sign in with credentials")])
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "form",
                       { attrs: { role: "form" } },
@@ -16734,12 +16658,6 @@ var render = function() {
                             "addon-left-icon": "ni ni-lock-circle-open"
                           }
                         }),
-                        _vm._v(" "),
-                        _c("base-checkbox", [
-                          _vm._v(
-                            "\n                                Remember me\n                            "
-                          )
-                        ]),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -16764,7 +16682,22 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "row mt-3" }, [
+                _c("div", { staticClass: "col-6" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-6 text-right" },
+                  [
+                    _c(
+                      "router-link",
+                      { staticClass: "text-light", attrs: { to: "/register" } },
+                      [_c("small", [_vm._v("Create new account")])]
+                    )
+                  ],
+                  1
+                )
+              ])
             ],
             1
           )
@@ -16799,24 +16732,6 @@ var staticRenderFns = [
         _c("span")
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-6" }, [
-        _c("a", { staticClass: "text-light", attrs: { href: "#" } }, [
-          _c("small", [_vm._v("Forgot password?")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-6 text-right" }, [
-        _c("a", { staticClass: "text-light", attrs: { href: "#" } }, [
-          _c("small", [_vm._v("Create new account")])
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -17078,48 +16993,11 @@ var render = function() {
                 [
                   [
                     _c("div", { staticClass: "text-muted text-center mb-3" }, [
-                      _c("small", [_vm._v("Sign in with")])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "btn-wrapper text-center" },
-                      [
-                        _c("base-button", { attrs: { type: "neutral" } }, [
-                          _c("img", {
-                            attrs: {
-                              slot: "icon",
-                              src: "img/icons/common/github.svg"
-                            },
-                            slot: "icon"
-                          }),
-                          _vm._v(
-                            "\n                                Github\n                            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("base-button", { attrs: { type: "neutral" } }, [
-                          _c("img", {
-                            attrs: {
-                              slot: "icon",
-                              src: "img/icons/common/google.svg"
-                            },
-                            slot: "icon"
-                          }),
-                          _vm._v(
-                            "\n                                Google\n                            "
-                          )
-                        ])
-                      ],
-                      1
-                    )
+                      _c("small", [_vm._v("Register in")])
+                    ])
                   ],
                   _vm._v(" "),
                   [
-                    _c("div", { staticClass: "text-center text-muted mb-4" }, [
-                      _c("small", [_vm._v("Or sign up with credentials")])
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "form",
                       { attrs: { role: "form" } },
@@ -17161,17 +17039,6 @@ var render = function() {
                               { staticClass: "text-success font-weight-700" },
                               [_vm._v("strong")]
                             )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("base-checkbox", [
-                          _c("span", [
-                            _vm._v(
-                              "I agree with the\n                                    "
-                            ),
-                            _c("a", { attrs: { href: "#" } }, [
-                              _vm._v("Privacy Policy")
-                            ])
                           ])
                         ]),
                         _vm._v(" "),

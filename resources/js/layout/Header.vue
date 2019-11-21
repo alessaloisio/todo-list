@@ -18,8 +18,8 @@
             </div>
 
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-                <li class="nav-item" v-if="$store.state.authenticate">
-                    <router-link to="/dashboard" class="nav-link" >Dashboard</router-link>
+                <li class="nav-item">
+                    <router-link to="/dashboard" class="nav-link" v-if="$store.state.authenticate">Dashboard</router-link>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link" data-toggle="dropdown" role="button">

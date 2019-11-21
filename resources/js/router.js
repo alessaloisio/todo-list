@@ -7,12 +7,15 @@ import Auth from "./middleware/auth";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 
-import Home from "./views/Home";
 import Landing from "./views/Landing";
 import Components from "./views/Components";
+
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Profile from "./views/Profile";
+
+import Dashboard from "./views/Dashboard";
+import Project from "./views/Project";
 
 Vue.use(Router);
 
@@ -72,7 +75,16 @@ export default new Router({
             name: "Dashboard",
             components: {
                 header: Header,
-                // default: Dashboard
+                default: Dashboard
+            },
+            beforeEnter: Auth
+        },
+        {
+            path: "/project/:id",
+            name: "Project",
+            components: {
+                header: Header,
+                default: Project
             },
             beforeEnter: Auth
         }

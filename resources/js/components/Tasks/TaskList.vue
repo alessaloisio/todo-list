@@ -20,7 +20,6 @@
       </div>
     </div>
     <div class="card-footer">
-      <hr>
       <div class="stats">
         <i class="fa fa-history"></i> Updated 3 minutes ago
       </div>
@@ -69,10 +68,13 @@ export default {
     }
   }
 };
+
+
 </script>
 <style>
     .table {
         table-layout: fixed;
+        overflow: hidden;
     }
 
     .table td, .table th {

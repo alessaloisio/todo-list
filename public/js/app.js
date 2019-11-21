@@ -4234,6 +4234,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "task",
   props: {
@@ -4276,7 +4277,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Task_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Task.vue */ "./resources/js/components/Tasks/Task.vue");
-//
 //
 //
 //
@@ -10009,7 +10009,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.task-title {\n    word-wrap: break-word;\n}\n.custom-control {\n    padding-bottom: 1.75rem;\n}\n.td-actions button {\n    margin-bottom: 0.25rem;\n    margin-top: 0.25rem;\n}\n", ""]);
+exports.push([module.i, "\n.task-title {\n    word-wrap: break-word;\n}\n.custom-control {\n    padding-bottom: 1.75rem;\n}\n.td-actions button {\n    margin-bottom: 0.25rem;\n    margin-top: 0.25rem;\n}\n.table .btn:not(:last-child) {\n    margin-right: 0;\n}\n.table .td-actions {\n    -webkit-transform: translateX(100%);\n            transform: translateX(100%);\n    -webkit-transition: -webkit-transform 1s;\n    transition: -webkit-transform 1s;\n    transition: transform 1s;\n    transition: transform 1s, -webkit-transform 1s;\n}\n.table tr:hover .td-actions {\n    -webkit-transform: translateX(0);\n            transform: translateX(0);\n}\n.table tr .task-title {\n    width: 70%;\n}\n", ""]);
 
 // exports
 
@@ -10028,7 +10028,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table {\n    table-layout: fixed;\n}\n.table td, .table th {\n    padding: 1em;\n    vertical-align: middle;\n    white-space: inherit;\n}\n@media (min-width: 576px) {\n.card {\n        -webkit-box-flex: 1 !important;\n                flex: 1 0 calc(50% - 30px) !important;\n        margin-right: 7.5px !important;\n        margin-bottom: 15px !important;\n        margin-left: 7.5px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table {\n    table-layout: fixed;\n    overflow: hidden;\n}\n.table td, .table th {\n    padding: 1em;\n    vertical-align: middle;\n    white-space: inherit;\n}\n@media (min-width: 576px) {\n.card {\n        -webkit-box-flex: 1 !important;\n                flex: 1 0 calc(50% - 30px) !important;\n        margin-right: 7.5px !important;\n        margin-bottom: 15px !important;\n        margin-left: 7.5px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -17701,7 +17701,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-info btn-simple btn-xs",
+            staticClass: "btn btn-success btn-simple btn-sm",
             attrs: { type: "button", rel: "tooltip", title: "Edit Task" },
             on: { click: _vm.handleEditClick }
           },
@@ -17711,7 +17711,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-danger btn-simple btn-xs",
+            staticClass: "btn btn-danger btn-simple btn-sm",
             attrs: { type: "button", rel: "tooltip", title: "Remove" },
             on: { click: _vm.handleDeleteClick }
           },
@@ -17785,8 +17785,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-footer" }, [
-      _c("hr"),
-      _vm._v(" "),
       _c("div", { staticClass: "stats" }, [
         _c("i", { staticClass: "fa fa-history" }),
         _vm._v(" Updated 3 minutes ago\n    ")

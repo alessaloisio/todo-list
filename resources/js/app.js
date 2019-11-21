@@ -24,7 +24,7 @@ import App from "./App.vue";
 
 import './registerServiceWorker';
 
-window.endpoint = "http://172.17.0.2:8000/api/";
+window.endpoint = location.protocol + '//' + location.hostname + ':' + location.port + '/api/';
 
 Vue.config.productionTip = false;
 

@@ -41117,7 +41117,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-window.endpoint = "http://172.17.0.2:8000/api/";
+window.endpoint = location.protocol + '//' + location.hostname + ':' + location.port + '/api/';
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_plugins_argon_kit__WEBPACK_IMPORTED_MODULE_1__["default"]);
 _router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {

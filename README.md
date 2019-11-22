@@ -1,4 +1,4 @@
-# Laravel TodoList
+# TodoList
 
 ## Task manager: 
 - [x] Database

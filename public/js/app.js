@@ -3903,6 +3903,24 @@ __webpack_require__.r(__webpack_exports__);
     deleteProject: function deleteProject(index) {
       this.$emit('deleteProject', index);
     }
+  },
+  created: function created() {
+    this.data.map(function (project) {
+      console.log("project", project);
+      var total = 0;
+      var checked = 0;
+      project.lists.map(function (list) {
+        console.log("list", list);
+        list.tasks.map(function (task) {
+          console.log("task", task.confirmed);
+          if (task.confirmed) checked++;
+          total++;
+        });
+      });
+      var completion = checked / total * 100;
+      project.completion = completion ? completion : 0;
+      console.log(total, checked);
+    });
   }
 });
 

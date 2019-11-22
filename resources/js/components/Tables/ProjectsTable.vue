@@ -96,6 +96,34 @@
       deleteProject(index) {
           this.$emit('deleteProject', index);
       }
+    },
+    created() {
+
+        this.data.map(project => {
+            console.log("project", project);
+
+            let total = 0;
+            let checked = 0;
+
+            project.lists.map(list => {
+                console.log("list", list);
+
+                list.tasks.map(task => {
+                    console.log("task", task.confirmed);
+                    if(task.confirmed) checked++;
+
+                    total++;
+                });
+            });
+
+
+            let completion = (checked/total) * 100;
+
+            project.completion = (completion) ? completion : 0;
+
+            console.log(total, checked);
+        });
+
     }
   }
 </script>

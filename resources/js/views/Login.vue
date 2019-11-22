@@ -84,6 +84,7 @@
                     .then(function (response) {
                         localStorage.setItem('auth_token', response.data['access_token']);
                         self.$store.commit("authenticate");
+                        self.$store.commit("getProjects");
                         self.$router.push({
                             name: "Dashboard"
                         });

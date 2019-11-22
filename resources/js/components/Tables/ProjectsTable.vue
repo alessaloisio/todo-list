@@ -7,9 +7,11 @@
             {{title}}
           </h3>
         </div>
+        <div class="col text-right">
+            <button type="button" class="btn btn-primary btn-sm" v-on:click="(event) => this.$emit('modalNew', event)">New</button>
+        </div>
       </div>
     </div>
-
     <div class="table-responsive">
       <base-table class="table align-items-center table-flush"
                   thead-classes="thead-light"
@@ -61,8 +63,8 @@
               </a>
 
               <template>
-                <a class="dropdown-item" >Edit</a>
-                <a class="dropdown-item" >Delete</a>
+                <a class="dropdown-item" @click="editProject(row.id)">Edit</a>
+                <a class="dropdown-item" @click="deleteProject(row.id)">Delete</a>
               </template>
             </base-dropdown>
           </td>
@@ -71,11 +73,11 @@
 
       </base-table>
     </div>
-
     <div class="card-footer d-flex justify-content-end"></div>
   </div>
 </template>
 <script>
+
   export default {
     name: 'projects-table',
     props: {
@@ -84,28 +86,17 @@
         },
         title: String,
         data: {
-            type: Array,
-            default: () => ([
-                {
-                    name: 'Angular Now UI Kit PRO',
-                    status: 'completed',
-                    statusType: 'success',
-                    completion: 100
-                },
-                {
-                    name: 'React Material Dashboard',
-                    status: 'on schedule',
-                    statusType: 'info',
-                    completion: 90
-                }
-            ])
+            type: Array
         }
     },
-    data() {
-      return {
-
+      methods: {
+        editProject(index) {
+            this.$emit('modalEdit', index);
+        },
+        deleteProject(index) {
+            this.$emit('deleteProject', index);
+        }
       }
-    }
   }
 </script>
 <style>

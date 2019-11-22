@@ -24,7 +24,7 @@ class ProjectPutRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name'     => 'max:255',
+            'name'     => 'required|max:255',
             'description' => 'max:255'
         ];
     }

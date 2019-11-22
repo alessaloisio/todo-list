@@ -4,7 +4,7 @@
         <base-checkbox v-model="checkboxes.checked"></base-checkbox>
     </td>
 
-    <td width="70%" class="task-title align-middle"><p class="mb-0">{{task.title}}</p></td>
+    <td width="70%" class="task-title align-middle"><p class="mb-0">{{task.content}}</p></td>
 
     <td class="td-actions text-right">
       <div class="table-icons">
@@ -29,13 +29,13 @@
 </template>
 <script>
 export default {
-    name: "task",
+  name: "task",
   props: {
     task: {
       type: Object,
       default: () => {
         return {
-          title: ''
+          content: 'no content'
         };
       }
     },

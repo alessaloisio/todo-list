@@ -67,7 +67,7 @@ class TaskController extends Controller
 
                 $result = $task->save();
 
-                if($result) return response()->json(['message' => 'Task added']);
+                if($result) return response()->json($task->getOriginal());
             }
         }
 
@@ -132,7 +132,7 @@ class TaskController extends Controller
                     $result = $task->save();
 
                     if ($result)
-                        return response()->json(['message' => 'Task updated']);
+                        return response()->json($task->getOriginal());
                 }
 
                 return response()->json($task);

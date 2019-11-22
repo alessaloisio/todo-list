@@ -5,7 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectPostRequest;
 use App\Http\Requests\ProjectPutRequest;
+
 use App\Project;
+use App\ListTask;
+use App\Task;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,12 +22,36 @@ class ProjectController extends Controller
      * @param Request $request
      * @return Response
      */
+    public function complete(Request $request)
+    {
+      $projects = Project::where('user_id', $request->get('user')->id)->get()->toArray();
+
+      foreach ($projects as &$project) {
+
+        $project['lists'] = ListTask::where('project_id', $project['id'])->get()->toArray();
+
+        foreach ($project['lists'] as &$list) {
+
+          $list['tasks'] = Task::where('list_id', $list['id'])->get()->toArray();
+        }
+      }
+
+      return response()->json($projects);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function index(Request $request)
     {
         $projects = Project::where('user_id', $request->get('user')->id)->get();
 
         return response()->json($projects);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -44,7 +71,7 @@ class ProjectController extends Controller
 
         $result = $project->save();
 
-        if($result) return response()->json(['message' => 'Project added']);
+        if($result) return response()->json($project->getOriginal());
 
         return response()->json(['message' => 'Project not added'], 422);
     }
@@ -85,7 +112,7 @@ class ProjectController extends Controller
             $result = $project->save();
 
             if($result)
-                return response()->json(['message' => 'Project updated']);
+                return response()->json($project->getOriginal());
         }
 
         return response()->json(['message' => 'Project not updated'], 422);

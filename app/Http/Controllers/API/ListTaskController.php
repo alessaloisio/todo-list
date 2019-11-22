@@ -52,7 +52,7 @@ class ListTaskController extends Controller
 
         $result = $listTask->save();
 
-        if($result) return response()->json(['message' => 'List added']);
+        if($result) return response()->json($listTask->getOriginal());
 
         return response()->json(['message' => 'List not added'], 422);
     }
@@ -104,7 +104,7 @@ class ListTaskController extends Controller
                 $result = $listTask->save();
 
                 if ($result)
-                    return response()->json(['message' => 'List updated']);
+                    return response()->json($listTask->getOriginal());
             }
 
         }

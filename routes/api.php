@@ -36,6 +36,8 @@ Route::middleware('APIToken')->group(function () {
     /*
      * PROJECTS
      */
+    Route::get('/projects/all', 'API\ProjectController@complete');
+
     Route::get('/projects', 'API\ProjectController@index');
 
     Route::post('/project', 'API\ProjectController@store');

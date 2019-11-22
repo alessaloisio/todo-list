@@ -19,7 +19,7 @@
 
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <li class="nav-item">
-                    <router-link to="/dashboard" class="nav-link" v-if="$store.state.authenticate">Dashboard</router-link>
+                    <router-link to="/dashboard" class="nav-link" v-if="$store.state.auth.authenticate">Dashboard</router-link>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link" data-toggle="dropdown" role="button">
@@ -33,7 +33,7 @@
             </ul>
 
 
-            <ul class="navbar-nav align-items-lg-center ml-lg-auto" v-if="!$store.state.authenticate">
+            <ul class="navbar-nav align-items-lg-center ml-lg-auto" v-if="!$store.state.auth.authenticate">
                 <li class="nav-item d-none d-lg-block ml-lg-4">
 
                     <router-link to="/login" class="btn btn-neutral btn-icon">
@@ -63,6 +63,7 @@
 <script>
 import BaseNav from "../components/BaseNav";
 import CloseButton from "../components/CloseButton";
+
 import axios from "axios";
 
 export default {
@@ -74,10 +75,11 @@ export default {
         logout: function (event) {
             const self = this;
 
-            axios.get(window.endpoint + "auth/logout", { params:{}, headers: { 'Authorization': localStorage.getItem('auth_token') } })
+            axios.get(window.endpoint + "auth/logout", self.$store.state.auth.header)
                 .then(function (response) {
                     localStorage.removeItem('auth_token');
                     self.$store.commit("authenticate");
+                    self.$notify({type: 'success', message: 'Success Logout'});
                     self.$router.push({
                         name: "Login"
                     });
@@ -85,6 +87,7 @@ export default {
                 .catch(function (error) {
                     if(error.response){
                         console.log(error.response);
+                        self.$notify({type: 'warning', message: error.response});
                     }
                 });
         }

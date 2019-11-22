@@ -23,7 +23,7 @@ class ListTaskPutRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name'     => 'max:255',
+            'name'     => 'required|max:255',
         ];
     }
 

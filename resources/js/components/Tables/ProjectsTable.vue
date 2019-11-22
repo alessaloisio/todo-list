@@ -89,14 +89,14 @@
             type: Array
         }
     },
-      methods: {
-        editProject(index) {
-            this.$emit('modalEdit', index);
-        },
-        deleteProject(index) {
-            this.$emit('deleteProject', index);
-        }
+    methods: {
+      editProject(index) {
+          this.$emit('modalEdit', index);
+      },
+      deleteProject(index) {
+          this.$emit('deleteProject', index);
       }
+    }
   }
 </script>
 <style>

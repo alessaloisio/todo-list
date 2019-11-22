@@ -43337,8 +43337,8 @@ __webpack_require__.r(__webpack_exports__);
     getProjects: function getProjects(state) {
       var next = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(window.endpoint + "projects/all", this.state.auth.header).then(function (response) {
-        state.data = response.data;
-        console.log(response.data);
+        state.data = response.data; // console.log(response.data);
+
         if (next) next();
       });
     },

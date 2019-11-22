@@ -3906,20 +3906,32 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.data.map(function (project) {
-      console.log("project", project);
       var total = 0;
       var checked = 0;
       project.lists.map(function (list) {
-        console.log("list", list);
         list.tasks.map(function (task) {
-          console.log("task", task.confirmed);
           if (task.confirmed) checked++;
           total++;
         });
       });
       var completion = checked / total * 100;
-      project.completion = completion ? completion : 0;
-      console.log(total, checked);
+      project.completion = completion ? completion << 0 : 0;
+
+      switch (project.completion) {
+        case 0:
+          project.statusType = "danger";
+          project.status = "Waiting";
+          break;
+
+        case 100:
+          project.statusType = "success";
+          project.status = "Completed";
+          break;
+
+        default:
+          if (project.completion < 50) project.statusType = "warning";else project.statusType = "info";
+          project.status = "In progress";
+      }
     });
   }
 });
@@ -17469,7 +17481,7 @@ var render = function() {
                             _c("base-progress", {
                               staticClass: "pt-0",
                               attrs: {
-                                type: row.statusType,
+                                type: "gradient-" + row.statusType,
                                 "show-percentage": false,
                                 value: row.completion
                               }

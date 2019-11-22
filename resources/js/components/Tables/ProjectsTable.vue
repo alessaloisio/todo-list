@@ -47,7 +47,7 @@
             <div class="d-flex align-items-center">
               <span class="completion mr-2">{{row.completion}}%</span>
               <div>
-                  <base-progress :type="row.statusType"
+                  <base-progress :type="'gradient-'+row.statusType"
                                  :show-percentage="false"
                                  class="pt-0"
                                  :value="row.completion"/>
@@ -100,28 +100,37 @@
     created() {
 
         this.data.map(project => {
-            console.log("project", project);
-
             let total = 0;
             let checked = 0;
 
             project.lists.map(list => {
-                console.log("list", list);
-
                 list.tasks.map(task => {
-                    console.log("task", task.confirmed);
                     if(task.confirmed) checked++;
-
                     total++;
                 });
             });
 
-
             let completion = (checked/total) * 100;
 
-            project.completion = (completion) ? completion : 0;
+            project.completion = (completion) ? completion << 0 : 0;
 
-            console.log(total, checked);
+            switch (project.completion) {
+                case 0:
+                    project.statusType = "danger";
+                    project.status = "Waiting";
+                    break;
+                case 100:
+                    project.statusType = "success";
+                    project.status = "Completed";
+                    break;
+                default:
+                    if(project.completion < 50)
+                        project.statusType = "warning";
+                    else project.statusType = "info";
+
+                    project.status = "In progress";
+            }
+
         });
 
     }

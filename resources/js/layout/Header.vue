@@ -21,15 +21,6 @@
                 <li class="nav-item">
                     <router-link to="/dashboard" class="nav-link" v-if="$store.state.auth.authenticate">Dashboard</router-link>
                 </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link" data-toggle="dropdown" role="button">
-                        <span class="nav-link-inner--text">Pages</span>
-                    </a>
-                    <div class="dropdown-menu">
-                        <router-link to="/components" class="dropdown-item">Components</router-link>
-                        <router-link to="/profile" class="dropdown-item">Profile</router-link>
-                    </div>
-                </li>
             </ul>
 
 

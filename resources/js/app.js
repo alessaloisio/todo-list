@@ -21,16 +21,11 @@ router.beforeEach((to, from, next) => {
   if(localStorage.getItem('auth_token') && !store.state.auth.authenticate){
     store.commit('authenticate');
     store.commit('getProjects', next);
-  }
-  else {
-    next();
-  }
-
+  } else next();
 });
 
-const app = new Vue({
+new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount("#app");
-

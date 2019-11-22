@@ -92,6 +92,7 @@
     methods: {
       editProject(index) {
           this.$emit('modalEdit', index);
+          this.created();
       },
       deleteProject(index) {
           this.$emit('deleteProject', index);

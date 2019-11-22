@@ -8,11 +8,9 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 
 import Landing from "./views/Landing";
-import Components from "./views/Components";
 
 import Login from "./views/Login";
 import Register from "./views/Register";
-import Profile from "./views/Profile";
 
 import Dashboard from "./views/Dashboard";
 import Project from "./views/Project";
@@ -28,15 +26,6 @@ export default new Router({
             components: {
                 header: Header,
                 default: Landing,
-                footer: Footer
-            }
-        },
-        {
-            path: "/components",
-            name: "Components",
-            components: {
-                header: Header,
-                default: Components,
                 footer: Footer
             }
         },
@@ -59,16 +48,6 @@ export default new Router({
                 footer: Footer
             },
             beforeEnter: Guest
-        },
-        {
-            path: "/profile",
-            name: "Profile",
-            components: {
-                header: Header,
-                default: Profile,
-                footer: Footer
-            },
-            beforeEnter: Auth
         },
         {
             path: "/dashboard",

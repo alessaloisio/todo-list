@@ -12,8 +12,7 @@
 ## Technologies used on this project : 
 - Laravel
 - Vue.js
-- HTML
-- CSS/SCSS
+- SCSS
 
 ## Website deployment 
 <https://toutdouxlisst.herokuapp.com>

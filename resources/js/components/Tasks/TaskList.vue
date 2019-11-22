@@ -19,7 +19,8 @@
                 :task="task"
                 :index="index"
                 @on-edit="handleModalEdit"
-                @on-delete="handleTaskDelete">
+                @on-delete="handleTaskDelete"
+                @on-checked="handleChecked">
           </task>
 
           <tr class="add-task card-footer" @click="handleModalNew">
@@ -68,8 +69,7 @@ export default {
       list: null,
       task_id: null,
       form: {
-          content: "",
-          confirmed: ""
+          content: ""
       },
       errors: {},
       modals: {
@@ -81,7 +81,6 @@ export default {
   methods: {
     closeModal() {
         this.form.content = '';
-        this.form.confirmed = '';
         this.task_id = null;
         this.errors = {};
         this.modals.editTask = false;
@@ -131,6 +130,22 @@ export default {
         }, self.$store.state.auth.header)
             .then(function (response) {
                 self.list.tasks = self.list.tasks.filter(task => (task.id !== self.list.tasks[self.task_id].id));
+                self.list.tasks = [...self.list.tasks, response.data];
+
+                self.closeModal();
+            })
+            .catch(function (error) {
+                self.errors = window.axiosFormErrors(error);
+            });
+    },
+    handleChecked(id) {
+        const self = this;
+
+        axios.post(window.endpoint + "project/" + self.list.project_id + "/list/" + self.list.id + "/task/" + self.list.tasks[id].id, {
+            confirmed: self.list.tasks[id].confirmed
+        }, self.$store.state.auth.header)
+            .then(function (response) {
+                self.list.tasks = self.list.tasks.filter(task => (task.id !== self.list.tasks[id].id));
                 self.list.tasks = [...self.list.tasks, response.data];
 
                 self.closeModal();

@@ -4235,7 +4235,8 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       "default": function _default() {
         return {
-          content: 'no content'
+          content: 'no content',
+          confirmed: false
         };
       }
     },
@@ -4254,6 +4255,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleDeleteClick: function handleDeleteClick() {
       this.$emit('on-delete', this.index);
+    },
+    handleCheckbox: function handleCheckbox() {
+      this.$emit('on-checked', this.index);
     }
   }
 });
@@ -4335,6 +4339,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
 
 
 
@@ -4349,8 +4354,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       list: null,
       task_id: null,
       form: {
-        content: "",
-        confirmed: ""
+        content: ""
       },
       errors: {},
       modals: {
@@ -4362,7 +4366,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   methods: {
     closeModal: function closeModal() {
       this.form.content = '';
-      this.form.confirmed = '';
       this.task_id = null;
       this.errors = {};
       this.modals.editTask = false;
@@ -4403,6 +4406,20 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }, self.$store.state.auth.header).then(function (response) {
         self.list.tasks = self.list.tasks.filter(function (task) {
           return task.id !== self.list.tasks[self.task_id].id;
+        });
+        self.list.tasks = [].concat(_toConsumableArray(self.list.tasks), [response.data]);
+        self.closeModal();
+      })["catch"](function (error) {
+        self.errors = window.axiosFormErrors(error);
+      });
+    },
+    handleChecked: function handleChecked(id) {
+      var self = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(window.endpoint + "project/" + self.list.project_id + "/list/" + self.list.id + "/task/" + self.list.tasks[id].id, {
+        confirmed: self.list.tasks[id].confirmed
+      }, self.$store.state.auth.header).then(function (response) {
+        self.list.tasks = self.list.tasks.filter(function (task) {
+          return task.id !== self.list.tasks[id].id;
         });
         self.list.tasks = [].concat(_toConsumableArray(self.list.tasks), [response.data]);
         self.closeModal();
@@ -17746,12 +17763,13 @@ var render = function() {
       { attrs: { width: "10%" } },
       [
         _c("base-checkbox", {
+          on: { input: _vm.handleCheckbox },
           model: {
-            value: _vm.checkboxes.checked,
+            value: _vm.task.confirmed,
             callback: function($$v) {
-              _vm.$set(_vm.checkboxes, "checked", $$v)
+              _vm.$set(_vm.task, "confirmed", $$v)
             },
-            expression: "checkboxes.checked"
+            expression: "task.confirmed"
           }
         })
       ],
@@ -17854,7 +17872,8 @@ var render = function() {
                   attrs: { task: task, index: index },
                   on: {
                     "on-edit": _vm.handleModalEdit,
-                    "on-delete": _vm.handleTaskDelete
+                    "on-delete": _vm.handleTaskDelete,
+                    "on-checked": _vm.handleChecked
                   }
                 })
               }),

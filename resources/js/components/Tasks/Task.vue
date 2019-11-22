@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td width="10%">
-        <base-checkbox v-model="checkboxes.checked"></base-checkbox>
+        <base-checkbox @input="handleCheckbox" v-model="task.confirmed"></base-checkbox>
     </td>
 
     <td width="70%" class="task-title align-middle"><p class="mb-0">{{task.content}}</p></td>
@@ -35,7 +35,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          content: 'no content'
+          content: 'no content',
+          confirmed : false
         };
       }
     },
@@ -54,6 +55,9 @@ export default {
     },
     handleDeleteClick() {
       this.$emit('on-delete', this.index);
+    },
+    handleCheckbox() {
+      this.$emit('on-checked', this.index);
     }
   }
 };

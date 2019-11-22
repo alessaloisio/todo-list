@@ -127,7 +127,7 @@ class TaskController extends Controller
 
                 if($task) {
                     if (!empty($request->content)) $task->content = $request->content;
-                    if (!empty($request->confirmed)) $task->confirmed = $request->confirmed;
+                    if (isset($request->confirmed)) $task->confirmed = $request->confirmed;
 
                     $result = $task->save();
 
@@ -135,7 +135,6 @@ class TaskController extends Controller
                         return response()->json($task->getOriginal());
                 }
 
-                return response()->json($task);
             }
         }
 

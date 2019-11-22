@@ -1,6 +1,6 @@
 # Laravel TodoList
 
-Made by Alessio Aloisio Mia Barbir
+Made by Alessio Aloisio and Mia Barbir
 
 
 ## Task manager: 
